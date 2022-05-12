@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/xkHeitor/Clean-Node-API/issues"
   },
-  "homepage": "https://github.com/xkHeitor/Clean-Node-API#readme"
+  "homepage": "https://github.com/xkHeitor/Clean-Node-API#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.1.2"
+  }
 }
