@@ -4,8 +4,8 @@
   "description": "Curso Rodrigo Manguinho | NodeJs, Typescript, TDD, DDD, Clean Architecture e SOLID",
   "main": "serve.js",
   "scripts": {
-    "test": "jest",
-    "test:staged": "jest"
+    "test": "clear && jest --passWithNoTests",
+    "test:staged": "jest --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,10 @@
     "lint-staged": "^12.4.1",
     "ts-jest": "^28.0.2",
     "typescript": "^4.6.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
