@@ -4,7 +4,7 @@
   "description": "Curso Rodrigo Manguinho | NodeJs, Typescript, TDD, DDD, Clean Architecture e SOLID",
   "main": "serve.js",
   "scripts": {
-    "test": "clear && jest --passWithNoTests",
+    "test": "clear && jest --passWithNoTests --watch",
     "test:staged": "jest --passWithNoTests"
   },
   "repository": {
