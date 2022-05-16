@@ -6,7 +6,7 @@ export default class SignUpController implements Controller {
 
   constructor(private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount){}
 
-  handle(httpRequest: HttpRequest): HttpResponse {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const requiredFields: string[] = ["name", "email", "password", "passwordConfirmation"];
     for (const field of requiredFields) {
       if(!httpRequest.body[field]) return badRequest(new MissingParamError(field));
@@ -19,7 +19,7 @@ export default class SignUpController implements Controller {
     try {
       const emailIsValid: boolean = this.emailValidator.isValid(email);
       if(!emailIsValid) return badRequest(new InvalidParamError("email"));
-      const account: AccountModel = this.addAccount.add({ name, email, password });
+      const account: AccountModel = await this.addAccount.add({ name, email, password });
       return ok(account);
     } catch(error: any) {
       return serverError();
