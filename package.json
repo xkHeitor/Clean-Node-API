@@ -5,7 +5,8 @@
   "main": "serve.js",
   "scripts": {
     "test": "clear && jest --passWithNoTests --watch",
-    "test:staged": "jest --passWithNoTests"
+    "test:staged": "jest --passWithNoTests",
+    "test:clear": "jest --clearCache"
   },
   "repository": {
     "type": "git",
