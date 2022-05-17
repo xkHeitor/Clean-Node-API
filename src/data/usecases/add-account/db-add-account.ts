@@ -1,6 +1,4 @@
-import { Encrypted } from '../../protocols/encrypted';
-import { AccountModel } from '../../../domain/models/account';
-import { AddAccount, AddAccountModel } from './../../../domain/usecases/add-account';
+import { AddAccount, AddAccountModel, AccountModel, Encrypted } from './db-add-account-protocols';
 
 export default class DbAddAccount implements AddAccount {
   
@@ -12,4 +10,4 @@ export default class DbAddAccount implements AddAccount {
     return new Promise(resolve => resolve(accountModel));
   }
 
-} 
+}
