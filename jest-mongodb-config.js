@@ -7,6 +7,7 @@ module.exports = {
     instance: {
       dbName: 'jest'
     },
-    autoStart: false
+    autoStart: false,
+    mongoURLEnvName: 'MONGODB_URI'
   }
 }
