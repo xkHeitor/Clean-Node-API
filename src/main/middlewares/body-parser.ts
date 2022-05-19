@@ -1,2 +1,2 @@
-import { json } from 'express';
-export const bodyParser = json();
+import { json } from 'express'
+export const bodyParser = json()

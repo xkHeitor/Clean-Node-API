@@ -1,6 +1,6 @@
 export class UninitializedDbError extends Error {
   constructor() {
-    super('UninitializedDb');
-    this.name = 'UninitializedDbError';
+    super('UninitializedDb')
+    this.name = 'UninitializedDbError'
   }
 }

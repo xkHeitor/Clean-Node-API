@@ -1,5 +1,5 @@
 import { Collection, MongoClient, MongoClientOptions } from 'mongodb'
-import { UninitializedDbError } from '../../../errors/';
+import { UninitializedDbError } from '../../../errors/'
 
 interface MongoHelperType {
   client: MongoClient|null;
@@ -14,22 +14,22 @@ export const MongoHelper: MongoHelperType = {
   client: null,
 
   async connect(url: string): Promise<void> {
-    const options: MongoClientOptions = {};
-    this.client = await MongoClient.connect(url, options);
+    const options: MongoClientOptions = {}
+    this.client = await MongoClient.connect(url, options)
   },
   
   async disconnect(): Promise<void> {
-    if (!this.client) throw new UninitializedDbError();
-    await this.client.close();
+    if (!this.client) throw new UninitializedDbError()
+    await this.client.close()
   },
 
   getCollection(name: string): Collection {
-    return this.client.db().collection(name);
+    return this.client.db().collection(name)
   },
   
   map: (collection: any): any => {
-    const { _id, ...collectionWithId } = collection;
-    return Object.assign({}, collectionWithId, { id: String(_id) });
+    const { _id, ...collectionWithId } = collection
+    return Object.assign({}, collectionWithId, { id: String(_id) })
   }
   
-};
+}
