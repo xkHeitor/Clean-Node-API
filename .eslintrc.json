@@ -19,6 +19,7 @@
     "padded-blocks":"off",
     "space-before-function-paren":"off",
     "eol-last":"off",
-    "space-before-blocks":"off"
+    "space-before-blocks":"off",
+    "array-callback-return":"off"
   }
 }
