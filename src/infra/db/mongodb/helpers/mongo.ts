@@ -3,27 +3,32 @@ import { UninitializedDbError } from '../../../errors'
 
 interface MongoHelperType {
   client: MongoClient|null;
+  url: string|null;
   connect: (url: string) => Promise<void>;
   disconnect: () => Promise<void>;
-  getCollection: (name: string) => Collection;
+  getCollection: (name: string) => Promise<Collection>;
   map: (collection: any) => any;
 }
 
 export const MongoHelper: MongoHelperType = {
   
   client: null,
+  url: null,
 
   async connect(url: string): Promise<void> {
     const options: MongoClientOptions = {}
     this.client = await MongoClient.connect(url, options)
+    this.url = url
   },
   
   async disconnect(): Promise<void> {
     if (!this.client) throw new UninitializedDbError()
     await this.client.close()
+    this.client = null
   },
 
-  getCollection(name: string): Collection {
+  async getCollection(name: string): Promise<Collection> {
+    if (!this.client) await this.connect(this.url)
     return this.client.db().collection(name)
   },
   
