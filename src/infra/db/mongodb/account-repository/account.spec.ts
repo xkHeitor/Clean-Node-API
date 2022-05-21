@@ -2,15 +2,16 @@ import { AccountModel } from './../../../../domain/models/account'
 import { MongoHelper } from '../helpers/mongo'
 
 import AccountMongoRepository from './account'
+import env from '../../../../main/config/env'
 
 describe('Account Mongo Repository', () => {
 
   beforeAll(async () => {
-    await MongoHelper.connect(global.__MONGO_URI__)
+    await MongoHelper.connect(env.mongoTest)
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 

@@ -1,15 +1,16 @@
 import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo'
 import app from '../config/app'
+import env from '../config/env'
 
 describe('SignUp Routes', () => {
 
   beforeAll(async () => {
-    await MongoHelper.connect(global.__MONGO_URI__)
+    await MongoHelper.connect(env.mongoTest)
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
