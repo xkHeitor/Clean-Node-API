@@ -1,13 +1,21 @@
 import { MissingParamError } from '../../errors'
 import { badRequest } from '../../helpers/http-helper'
 import { HttpResponse, HttpRequest } from './../../protocols'
-import { Controller } from './../../protocols/controller'
 import { LoginController } from './login'
+
+interface SutTypes {
+  sut: LoginController
+}
+
+const makeSut = (): SutTypes => {
+  const sut = new LoginController()
+  return { sut } 
+}
 
 describe('Login Controller', () => {
 
   test('Should return 400 if no email is provided', async () => {
-    const sut: Controller = new LoginController()
+    const { sut } = makeSut()
     const httpRequest: HttpRequest = {
       body: {
         password: 'any_pass'
@@ -18,7 +26,7 @@ describe('Login Controller', () => {
   })
 
   test('Should return 400 if no password is provided', async () => {
-    const sut: Controller = new LoginController()
+    const { sut } = makeSut()
     const httpRequest: HttpRequest = {
       body: {
         email: 'any_email'
