@@ -1,11 +1,7 @@
-import { serverError, unauthorized } from './../../helpers/http-helper'
-import { InvalidParamError } from './../../errors/invalid-param-error'
-import { EmailValidator } from './../../protocols/email-validator'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
-import { HttpResponse, HttpRequest } from './../../protocols'
+import { Controller, HttpResponse, HttpRequest, Authentication, EmailValidator } from './login-protocols'
+import { serverError, unauthorized, badRequest } from './../../helpers/http-helper'
+import { MissingParamError, InvalidParamError } from '../../errors'
 import { LoginController } from './login'
-import { Authentication } from '../../../domain/usecases/authentication'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
@@ -26,7 +22,7 @@ const makeEmailValidator = (): EmailValidator => {
 }
 
 interface SutTypes {
-  sut: LoginController;
+  sut: Controller;
   emailValidatorStub: EmailValidator;
   authenticationStub: Authentication;
 }
@@ -34,7 +30,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const authenticationStub: Authentication = makeAuthentication()
   const emailValidatorStub: EmailValidator = makeEmailValidator()
-  const sut: LoginController = new LoginController(emailValidatorStub, authenticationStub)
+  const sut: Controller = new LoginController(emailValidatorStub, authenticationStub)
   return { sut, emailValidatorStub, authenticationStub } 
 }
 
