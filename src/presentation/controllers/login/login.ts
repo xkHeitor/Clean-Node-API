@@ -17,10 +17,10 @@ export class LoginController implements Controller {
       const validEmail: boolean = this.emailValidator.isValid(email)
       if (!validEmail) return badRequest(new InvalidParamError('email'))
       
-      const authentication: string = await this.authentication.auth(email, password)
-      if (!authentication) return unauthorized()
+      const accessToken: string = await this.authentication.auth(email, password)
+      if (!accessToken) return unauthorized()
 
-      return ok(authentication)
+      return ok({ accessToken })
     } catch (error: any) {
       return serverError(error)
     }
