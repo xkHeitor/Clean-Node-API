@@ -16,7 +16,8 @@ export default class SignUpController implements Controller {
     if (password !== passwordConfirmation) { return badRequest(new InvalidParamError('passwordConfirmation')) }
 
     try {
-      this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(httpRequest.body)
+      if (error) return badRequest(error)
       const emailIsValid: boolean = this.emailValidator.isValid(email)
       if (!emailIsValid) return badRequest(new InvalidParamError('email'))
       const account: AccountModel = await this.addAccount.add({ name, email, password })
