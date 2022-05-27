@@ -7,8 +7,7 @@ export default class SignUpController implements Controller {
   constructor(private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount, private readonly validation: Validation) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const { name, email, password, passwordConfirmation } = httpRequest.body
-    if (password !== passwordConfirmation) { return badRequest(new InvalidParamError('passwordConfirmation')) }
+    const { name, email, password } = httpRequest.body
 
     try {
       const error = this.validation.validate(httpRequest.body)
