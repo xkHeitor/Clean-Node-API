@@ -1,5 +1,5 @@
 import { Controller } from './../../presentation/protocols/controller'
-import { makeSignUpController } from './../factories/signup'
+import { makeSignUpController } from '../factories/signup/signup'
 import { adaptRouteExpress } from './../adapters/express-route'
 import { Router } from 'express'
 
