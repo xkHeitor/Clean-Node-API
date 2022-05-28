@@ -11,7 +11,7 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
-    "test:clear": "npm test"
+    "test:clear": "jest --clearCache"
   },
   "repository": {
     "type": "git",
