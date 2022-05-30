@@ -1,4 +1,4 @@
-import { Validation } from './validation'
+import { Validation } from '../../protocols/validation'
 import { MissingParamError } from './../../errors/missing-param-error'
 import { RequiredFieldValidation } from './required-field-validation'
 
