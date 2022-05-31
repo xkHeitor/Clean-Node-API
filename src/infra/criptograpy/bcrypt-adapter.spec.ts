@@ -1,4 +1,4 @@
-import { Encrypted } from './../../data/protocols/encrypted'
+import { Encrypted } from '../../data/protocols/criptograpy/encrypted'
 import BcryptAdapter from './bcrypt-adater'
 import bcrypt from 'bcrypt'
 
