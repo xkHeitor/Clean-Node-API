@@ -1,6 +1,6 @@
+import { LoadAccountByEmailRepository } from './../../protocols/repository/load-account-by-email-repository'
 import { AuthenticationModel } from './../../../domain/usecases/authentication'
 import { DbAuthentication } from './db-authentication'
-import { LoadAccountByEmailRepository } from '../../protocols/load-account-by-email-repository'
 import { AccountModel } from './../../../domain/models/account'
 
 describe('DbAuthentication UseCase', () => {
