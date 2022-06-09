@@ -1,10 +1,12 @@
-import { LoadAccountByEmailRepository } from './../../protocols/repository/load-account-by-email-repository'
-import { AuthenticationModel } from './../../../domain/usecases/authentication'
 import { DbAuthentication } from './db-authentication'
-import { AccountModel } from './../../../domain/models/account'
-import { HashComparer } from '../../protocols/criptograpy/hash-comparer'
-import { TokenGenerator } from '../../protocols/criptograpy/token-generator'
-import { UpdateAccessTokenRepository } from '../../protocols/repository/update-access-token-repository'
+import { 
+  LoadAccountByEmailRepository,
+  AuthenticationModel,
+  AccountModel,
+  HashComparer,
+  TokenGenerator,
+  UpdateAccessTokenRepository 
+} from './db-authentication-protocols'
 
 describe('DbAuthentication UseCase', () => {
 
