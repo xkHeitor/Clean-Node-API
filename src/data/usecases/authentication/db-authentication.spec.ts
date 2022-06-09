@@ -55,9 +55,9 @@ describe('DbAuthentication UseCase', () => {
 
   const makeSut = (): SutTypes => {
     const loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository = makeLoadAccountByEmailRepositoryStub()
-    const hashComparerStub = makeHashComparer()
+    const hashComparerStub: HashComparer = makeHashComparer()
     const tokenGeneratorStub: TokenGenerator = makeTokenGenerator()
-    const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub)
+    const sut: DbAuthentication = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub)
     return { sut, loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub }
   }
 
@@ -120,6 +120,12 @@ describe('DbAuthentication UseCase', () => {
     jest.spyOn(tokenGeneratorStub, 'generate').mockReturnValueOnce(rejectPromise)
     const resultPromise: Promise<string> = sut.auth(makeFakeAuthentication())
     await expect(resultPromise).rejects.toThrow()
+  })
+
+  test('Should call TokenGenerator and returns a token on success', async () => {
+    const { sut }: SutTypes = makeSut()
+    const accessToken: string = await sut.auth(makeFakeAuthentication())
+    expect(accessToken).toBe('any_token')
   })
 
 })
