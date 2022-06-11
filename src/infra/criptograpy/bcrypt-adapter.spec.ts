@@ -1,4 +1,4 @@
-import { Encrypted } from '../../data/protocols/criptograpy/encrypted'
+import { Hasher } from '../../data/protocols/criptograpy/hasher'
 import BcryptAdapter from './bcrypt-adater'
 import bcrypt from 'bcrypt'
 
@@ -17,16 +17,16 @@ const makeSut = (): BcryptAdapter => {
 describe('Bcrypt ADapter', () => {
 
   test('Should call bcrypt with correct values', async () => {
-    const sut: Encrypted = makeSut()
+    const sut: Hasher = makeSut()
     const hashSpy = jest.spyOn(bcrypt, 'hash')
     
-    await sut.encrypt(value)
+    await sut.hash(value)
     expect(hashSpy).toHaveBeenCalledWith(value, salt)
   })
 
   test('Should return a hash on success', async () => {
-    const sut: Encrypted = makeSut()
-    const hash: string = await sut.encrypt(value)
+    const sut: Hasher = makeSut()
+    const hash: string = await sut.hash(value)
     expect(hash).toBe('any_hash')
   })
 
