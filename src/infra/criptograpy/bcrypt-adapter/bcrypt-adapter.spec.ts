@@ -1,4 +1,4 @@
-import BcryptAdapter from './bcrypt-adater'
+import BcryptAdapter from './bcrypt-adapter'
 import bcrypt from 'bcrypt'
 
 const valueHash: string = 'any_hash' 
