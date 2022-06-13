@@ -44,7 +44,7 @@ describe('Bcrypt ADapter', () => {
 
   test('Should return true when compare success', async () => {
     const sut: BcryptAdapter = makeSut()
-    const isValid = await sut.compare(value, valueHash)
+    const isValid: boolean = await sut.compare(value, valueHash)
     expect(isValid).toBe(true)
   })
 
