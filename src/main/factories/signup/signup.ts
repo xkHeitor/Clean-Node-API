@@ -9,8 +9,8 @@ import { AddAccount } from '../../../domain/usecases/add-account'
 import { makeSignUpValidation } from './signup-validation'
 import SignUpController from '../../../presentation/controllers/signup/signup'
 import DbAddAccount from '../../../data/usecases/add-account/db-add-account'
-import BcryptAdapter from '../../../infra/criptograpy/bcrypt-adater'
 import AccountMongoRepository from '../../../infra/db/mongodb/account-repository/account'
+import BcryptAdapter from '../../../infra/criptograpy/bcrypt-adapter/bcrypt-adapter'
 
 export const makeSignUpController = (): Controller => {
   const salt: number = 12
