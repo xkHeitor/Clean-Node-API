@@ -1,8 +1,8 @@
 import { Collection, InsertOneResult } from 'mongodb'
-import { AccountModel } from './../../../../domain/models/account'
+import { AccountModel } from '../../../../domain/models/account'
 import { MongoHelper } from '../helpers/mongo'
 
-import AccountMongoRepository from './account'
+import AccountMongoRepository from './account-mongo-repository'
 import env from '../../../../main/config/env'
 
 let accountCollection: Collection
