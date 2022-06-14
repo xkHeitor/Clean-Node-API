@@ -4,7 +4,9 @@
   "description": "Curso Rodrigo Manguinho | NodeJs, Typescript, TDD, DDD, Clean Architecture e SOLID",
   "main": "serve.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "build": "rm -r dist && tsc",
+    "start": "node dist/main/server.js",
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:staged": "npm test -- ",
@@ -53,7 +55,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",
-    "fast-glob": "^3.2.11",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.6.0",
     "validator": "^13.7.0"

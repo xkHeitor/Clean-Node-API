@@ -1,4 +1,5 @@
 module.exports = {
+  injectGlobals: true,
   roots: ['<rootDir>/src'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
