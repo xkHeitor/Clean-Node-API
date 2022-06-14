@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: 'clean-node-api'
+    ports:
+      - 5050:5050
+    volumes:
+      - ./user/app
+    links:
+      - mongoDB
+    depends_on:
+      - mongoDB
+    environment:
+      - MONGO_URL=mongodb://mongoDB:27017/clean-node-api
+  mongoDB:
+    container_name: mongoDDB
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27017:27017
+networks:
+  overlay:
