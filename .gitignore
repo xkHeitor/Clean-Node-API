@@ -4,3 +4,5 @@ coverage
 .vscode
 globalConfig.json
 *.lock
+data
+.env

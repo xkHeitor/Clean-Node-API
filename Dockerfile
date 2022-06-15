@@ -2,12 +2,6 @@ FROM node:16-alpine
 
 WORKDIR /usr/apps/clean-node-api
 
-COPY package.json ./
+COPY ./package.json .
 
-RUN npm install
-
-COPY . .
-
-EXPOSE 5050
-
-CMD ["npm", "dev"]
+RUN npm install --omit=dev

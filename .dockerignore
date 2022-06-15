@@ -1,4 +1,6 @@
-.git
 node_modules
-dist
 coverage
+globalConfig.json
+.vscode
+.git
+*.lock
