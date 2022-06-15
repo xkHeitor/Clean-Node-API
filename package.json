@@ -4,9 +4,10 @@
   "description": "Curso Rodrigo Manguinho | NodeJs, Typescript, TDD, DDD, Clean Architecture e SOLID",
   "main": "serve.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
     "start": "node dist/main/server.js",
-    "dev": "sucrase-node src/main/server.ts",
+    "build": "rimraf dist && tsc",
+    "up": "npm run build && sudo docker-compose up -d",
+    "down": "sudo docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:staged": "npm test -- ",
@@ -48,7 +49,6 @@
     "jest": "^28.1.0",
     "lint-staged": "^12.4.1",
     "rimraf": "^3.0.2",
-    "sucrase": "^3.21.0",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.2",
     "typescript": "^4.4.4"

@@ -6,3 +6,4 @@ globalConfig.json
 *.lock
 data
 .env
+package-lock.json
