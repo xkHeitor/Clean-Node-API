@@ -61,6 +61,6 @@
     "validator": "^13.7.0"
   },
   "engines": {
-    "node": "16.15.x"
+    "node": "16.x"
   }
 }
