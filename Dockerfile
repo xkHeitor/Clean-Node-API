@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-WORKDIR /usr/app
+WORKDIR /usr/apps/clean-node-api
 
 COPY package.json ./
 
