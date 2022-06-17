@@ -16,9 +16,11 @@ services:
     restart: always
     command: npm start
     volumes:
+      - ./package.json:/usr/apps/clean-node-api/package.json
       - ./dist:/usr/apps/clean-node-api/dist
     ports:
       - ${PORT_API}:${PORT_API}
+      - 9222:9222
     links:
       - mongoDB
     depends_on:
