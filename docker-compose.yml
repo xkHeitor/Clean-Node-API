@@ -14,10 +14,10 @@ services:
     image: clean-node-api
     build: .
     restart: always
-    command: npm start
+    command: npm run start:watch
     volumes:
+      - ./dist/:/usr/apps/clean-node-api/dist/
       - ./package.json:/usr/apps/clean-node-api/package.json
-      - ./dist:/usr/apps/clean-node-api/dist
     ports:
       - ${PORT_API}:${PORT_API}
       - 9222:9222

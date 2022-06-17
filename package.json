@@ -5,9 +5,12 @@
   "main": "serve.js",
   "scripts": {
     "start": "node dist/main/server.js",
+    "start:watch": "nodemon -L --watch ./dist dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
-    "up": "npm run build && sudo docker-compose up -d",
+    "build:watch": "tsc -w",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
+    "up": "npm run build && sudo docker-compose up -d --no-cache",
+    "up:log": "npm run build && sudo docker-compose up",
     "down": "sudo docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
     "test:verbose": "jest --passWithNoTests --runInBand",
@@ -59,6 +62,7 @@
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.6.0",
+    "nodemon": "^2.0.16",
     "validator": "^13.7.0"
   },
   "engines": {
