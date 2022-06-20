@@ -13,7 +13,7 @@
     "up:log": "npm run build && sudo docker-compose up",
     "down": "sudo docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles --forceExit",
-    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand --detectOpenHandles",
     "test:staged": "npm test -- ",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
