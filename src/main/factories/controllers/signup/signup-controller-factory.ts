@@ -2,7 +2,7 @@ import { makeLogControllerDecorator } from './../../decorators/log-controller-de
 import { makeDbAddAccount } from './../../usecases/add-account/db-add-account-factory'
 import { Authentication } from './../../../../domain/usecases/authentication'
 import { makeDbAuthentication } from './../../usecases/authentication/db-authentication-factory'
-import { ValidationComposite } from '../../../../presentation/helpers/validators/validation-composite'
+import { ValidationComposite } from '../../../../validation/validators/validation-composite'
 import { Controller } from '../../../../presentation/protocols/controller'
 import { AddAccount } from '../../../../domain/usecases/add-account'
 import { makeSignUpValidation } from './signup-validation-factory'
