@@ -1,10 +1,10 @@
-node_modules
-dist
-coverage
-.vscode
-globalConfig.json
 *.lock
-data
-!src/data
+.vscode
 .env
 package-lock.json
+globalConfig.json
+coverage
+node_modules
+dist
+data
+!src/data

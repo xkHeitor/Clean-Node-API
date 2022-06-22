@@ -1,7 +1,8 @@
-dist
-./data
-node_modules
-coverage
+*.lock
 .vscode
 globalConfig.json
-yarn.lock
+node_modules
+coverage
+dist
+data
+!src/data
