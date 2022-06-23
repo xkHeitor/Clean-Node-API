@@ -1,6 +1,6 @@
-import { ok, badRequest, serverError, forbidden } from '../../helpers/http/http-helper'
-import { HttpRequest } from '../../protocols/http'
-import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
+import { ok, badRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
+import { HttpRequest } from '../../../protocols/http'
+import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
 import SignUpController from './signup-controller'
 import { 
   Controller, 

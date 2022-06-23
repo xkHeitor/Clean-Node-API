@@ -6,7 +6,7 @@ import { ValidationComposite } from '../../../../validation/validators/validatio
 import { Controller } from '../../../../presentation/protocols/controller'
 import { AddAccount } from '../../../../domain/usecases/add-account'
 import { makeSignUpValidation } from './signup-validation-factory'
-import SignUpController from '../../../../presentation/controllers/signup/signup-controller'
+import SignUpController from '../../../../presentation/controllers/login/signup/signup-controller'
 
 export const makeSignUpController = (): Controller => {
   const validationComposite: ValidationComposite = makeSignUpValidation()
