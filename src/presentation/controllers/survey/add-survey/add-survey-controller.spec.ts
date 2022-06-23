@@ -13,7 +13,7 @@ describe('AddSurvey Controller', () => {
     }
   })
 
-  const makeValidationStub = (): Validation => {
+  const makeValidation = (): Validation => {
     class ValidationStub implements Validation {
       validate (input: any): Error|undefined {
         return undefined
@@ -22,13 +22,13 @@ describe('AddSurvey Controller', () => {
     return new ValidationStub()
   }
 
-  interface sutType {
+  interface sutTypes {
     sut: AddSurveyController,
     validationStub: Validation
   }
 
-  const makeSut = (): sutType => {
-    const validationStub: Validation = makeValidationStub()
+  const makeSut = (): sutTypes => {
+    const validationStub: Validation = makeValidation()
     const sut: AddSurveyController = new AddSurveyController(validationStub)
     return { sut, validationStub }
   }
