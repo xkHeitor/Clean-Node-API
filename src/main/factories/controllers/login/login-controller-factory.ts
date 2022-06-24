@@ -1,7 +1,7 @@
 import { makeLogControllerDecorator } from './../../decorators/log-controller-decorator-factory'
 import { Authentication } from './../../../../domain/usecases/authentication'
 import { makeDbAuthentication } from './../../usecases/authentication/db-authentication-factory'
-import { LoginController } from '../../../../presentation/controllers/login/login-controller'
+import { LoginController } from '../../../../presentation/controllers/login/login/login-controller'
 import { Controller } from '../../../../presentation/protocols/controller'
 import { ValidationComposite } from '../../../../validation/validators'
 import { makeLoginUpValidation } from './login-validation-factory'
