@@ -36,9 +36,15 @@ describe('Auth Middleware', () => {
     return { sut, loadAccountByTokenStub }
   }
 
-  test('Should return 403 if no x-access-token exists in headers', async () => {
+  test('Should return 403 if no headers', async () => {
     const { sut } = makeSut()
     const httpResponse: HttpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
+  test('Should return 403 if no x-access-token exists in headers', async () => {
+    const { sut } = makeSut()
+    const httpResponse: HttpResponse = await sut.handle({ headers: {} })
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
