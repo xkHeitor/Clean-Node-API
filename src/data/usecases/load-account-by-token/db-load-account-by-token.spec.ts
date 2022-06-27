@@ -61,6 +61,14 @@ describe('DbLoadAccountByToken UseCase', () => {
     expect(account).toBeNull()
   })
 
+  test('Should throw if Decrypter throws', async () => {
+    const { sut, decryptStub }: sutTypes = makeSut()
+    const rejectPromise: Promise<string|null> = new Promise((resolve, reject) => reject(new Error()))
+    jest.spyOn(decryptStub, 'decrypt').mockReturnValueOnce(rejectPromise)
+    const resultPromise: Promise<AccountModel|null> = sut.load(anyValue, anyRole)
+    await expect(resultPromise).rejects.toThrow()
+  })
+
   test('Should call LoadAccountByTokenRepository with correct values', async () => {
     const { sut, loadAccountByTokenRepositoryStub } = makeSut()
     const loadSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken')
@@ -74,6 +82,14 @@ describe('DbLoadAccountByToken UseCase', () => {
     jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken').mockReturnValueOnce(resolvePromise)
     const account: AccountModel|null = await sut.load(anyValue, anyRole)
     expect(account).toBeNull()
+  })
+
+  test('Should throw if LoadAccountByTokenRepository throws', async () => {
+    const { sut, loadAccountByTokenRepositoryStub }: sutTypes = makeSut()
+    const rejectPromise: Promise<AccountModel|null> = new Promise((resolve, reject) => reject(new Error()))
+    jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken').mockReturnValueOnce(rejectPromise)
+    const resultPromise: Promise<AccountModel|null> = sut.load(anyValue, anyRole)
+    await expect(resultPromise).rejects.toThrow()
   })
 
   test('Should returns an account on success', async () => {
