@@ -20,7 +20,7 @@ describe('Auth Middleware', () => {
 
   const makeLoadAccountByToken = (): LoadAccountByToken => {
     class LoadAccountByTokenStub implements LoadAccountByToken {
-      async load (accessToken: string, role?: string | undefined): Promise<AccountModel> {
+      async load (accessToken: string, role?: string | undefined): Promise<AccountModel|null> {
         return new Promise(resolve => (resolve(makeFakeAccount())))
       }
     }
@@ -50,6 +50,14 @@ describe('Auth Middleware', () => {
     const httpRequest: HttpRequest = makeFakeRequest() 
     await sut.handle(httpRequest)
     expect(loadSpy).toHaveBeenCalledWith(httpRequest.headers['x-access-token'])
+  })
+
+  test('Should return 403 if LoadAccountByToken returns call', async () => {
+    const { sut,loadAccountByTokenStub } = makeSut()
+    const resolvePromise: Promise<null> = new Promise(resolve => resolve(null))
+    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(resolvePromise)
+    const httpResponse: HttpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
 })
