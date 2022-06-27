@@ -25,7 +25,7 @@ describe('Survey Routes', () => {
     await request(app).post('/api/surveys')
       .send({
         question: 'Question',
-        answer: [{
+        answers: [{
           answer: 'Answer',
           image: 'http:///image-none.com'
         }]
