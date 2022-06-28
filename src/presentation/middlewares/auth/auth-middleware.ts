@@ -7,8 +7,7 @@ export class AuthMiddleware implements Middleware {
   constructor(private readonly loadAccountByToken: LoadAccountByToken, private readonly role?: string) {}
   
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const accessToken = httpRequest?.headers?.['x-access-token']
-
+    const accessToken: string = httpRequest.headers?.['x-access-token']
     if (accessToken) {
       try {
         const account: AccountModel|null = await this.loadAccountByToken.load(accessToken, this.role)
