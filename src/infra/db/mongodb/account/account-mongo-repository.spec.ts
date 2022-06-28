@@ -14,20 +14,20 @@ const accountData = {
   password: 'any_pass'
 }
 
-beforeAll(async () => {
-  await MongoHelper.connect(env.mongoTest)
-})
-
-beforeEach(async () => {
-  accountCollection = await MongoHelper.getCollection('accounts')
-  await accountCollection.deleteMany({})
-})
-
-afterAll(async () => {
-  await MongoHelper.disconnect()
-})
-
 describe('Account Mongo Repository', () => {
+
+  beforeAll(async () => {
+    await MongoHelper.connect(env.mongoTest)
+  })
+  
+  beforeEach(async () => {
+    accountCollection = await MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
+  })
+  
+  afterAll(async () => {
+    await MongoHelper.disconnect()
+  })
 
   const makeSut = (): AccountMongoRepository => {
     return new AccountMongoRepository()
@@ -107,6 +107,12 @@ describe('Account Mongo Repository', () => {
       expect(account?.email).toBe(accountData.email)
       expect(account?.password).toBe(accountData.password)
       expect(account?.id).toBeTruthy()
+    })
+
+    test('Should return null if loadByToken fails', async () => {
+      const sut: AccountMongoRepository = makeSut()
+      const account: AccountModel|null = await sut.loadByToken(token)
+      expect(account).toBeFalsy()
     })
   })
 
