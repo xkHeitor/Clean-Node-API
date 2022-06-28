@@ -7,33 +7,27 @@ import env from '../../../../main/config/env'
 
 let accountCollection: Collection
 const token: string = 'any_token'
+const anyRole: string = 'any_role'
 const accountData = {
   name: 'any_name',
   email: 'any_email',
   password: 'any_pass'
 }
 
-const accountDataWithToken = {
-  name: 'any_name',
-  email: 'any_email',
-  password: 'any_pass',
-  accessToken: token
-}
+beforeAll(async () => {
+  await MongoHelper.connect(env.mongoTest)
+})
+
+beforeEach(async () => {
+  accountCollection = await MongoHelper.getCollection('accounts')
+  await accountCollection.deleteMany({})
+})
+
+afterAll(async () => {
+  await MongoHelper.disconnect()
+})
 
 describe('Account Mongo Repository', () => {
-
-  beforeAll(async () => {
-    await MongoHelper.connect(env.mongoTest)
-  })
-
-  beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
-    await accountCollection.deleteMany({})
-  })
-
-  afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
 
   const makeSut = (): AccountMongoRepository => {
     return new AccountMongoRepository()
@@ -84,8 +78,30 @@ describe('Account Mongo Repository', () => {
   describe('loadByToken()', () => {
     test('Should return an account on loadByToken success without role', async () => {
       const sut: AccountMongoRepository = makeSut()
-      await accountCollection.insertOne(accountDataWithToken)
+      await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_pass',
+        accessToken: token
+      })
       const account: AccountModel|null = await sut.loadByToken(token)
+      expect(account).toBeTruthy()
+      expect(account?.name).toBe(accountData.name)
+      expect(account?.email).toBe(accountData.email)
+      expect(account?.password).toBe(accountData.password)
+      expect(account?.id).toBeTruthy()
+    })
+
+    test('Should return an account on loadByToken success with role', async () => {
+      const sut: AccountMongoRepository = makeSut()
+      await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_pass',
+        accessToken: token,
+        role: anyRole
+      })
+      const account: AccountModel|null = await sut.loadByToken(token, anyRole)
       expect(account).toBeTruthy()
       expect(account?.name).toBe(accountData.name)
       expect(account?.email).toBe(accountData.email)
