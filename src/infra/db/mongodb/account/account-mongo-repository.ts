@@ -1,3 +1,4 @@
+import { LoadAccountByTokenRepository } from './../../../../data/protocols/repository/account/load-account-by-token-repository'
 import { AddAccountRepository } from '../../../../data/protocols/repository/account/add-account-repository'
 import { Collection, InsertOneResult, ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo'
@@ -6,8 +7,8 @@ import { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { LoadAccountByEmailRepository } from '../../../../data/protocols/repository/account/load-account-by-email-repository'
 import { UpdateAccessTokenRepository } from '../../../../data/protocols/repository/account/update-access-token-repository'
 
-export default class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
-  
+export default class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
+
   async add(addAccountModel: AddAccountModel): Promise<AccountModel> {
     const accountCollection: Collection = await MongoHelper.getCollection('accounts')
     const insertResult: InsertOneResult = await accountCollection.insertOne(addAccountModel)
@@ -22,7 +23,14 @@ export default class AccountMongoRepository implements AddAccountRepository, Loa
   }
   
   async updateAccessToken(id: string, accessToken: string): Promise<void> {
-    const accountCollection = await MongoHelper.getCollection('accounts')
+    const accountCollection: Collection = await MongoHelper.getCollection('accounts')
     await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
   }
+
+  async loadByToken(token: string, role?: string): Promise<AccountModel> {
+    const accountCollection: Collection = await MongoHelper.getCollection('accounts')
+    const account = await accountCollection.findOne({ accessToken: token, role })
+    return account && MongoHelper.map(account)
+  }
+
 }  
