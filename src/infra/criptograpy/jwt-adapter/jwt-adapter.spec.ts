@@ -1,5 +1,5 @@
 import { JwtAdapter } from './jwt-adapter'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const anyId: string = 'any_id'
 const anyValue: string = 'any_value'
@@ -11,8 +11,8 @@ jest.mock('jsonwebtoken', () => ({
     return new Promise(resolve => resolve(token))
   },
 
-  async verify (token: string): Promise<JwtPayload|string> {
-    return new Promise(resolve => resolve({ id: anyValue }))
+  async verify (token: string): Promise<string> {
+    return new Promise(resolve => resolve(anyValue))
   }
 }))
 
@@ -27,7 +27,7 @@ describe('JWT Adapter', () => {
       const sut = makeSut()
       const signSpy = jest.spyOn(jwt, 'sign')
       await sut.encrypt(anyId)
-      expect(signSpy).toHaveBeenCalledWith({ id: anyId }, keySecret)
+      expect(signSpy).toHaveBeenCalledWith(anyId, keySecret)
     })
   
     test('Should return a token on sign success', async () => {
@@ -56,7 +56,7 @@ describe('JWT Adapter', () => {
 
     test('Should return a token on verify success', async () => {
       const sut = makeSut()
-      const value: string = await sut.decrypt(token)
+      const value: string|null = await sut.decrypt(token)
       expect(value).toBe(anyValue)
     })
     
@@ -65,7 +65,7 @@ describe('JWT Adapter', () => {
       jest.spyOn(jwt, 'verify').mockImplementationOnce(() => {
         throw new Error()
       })
-      const accessToken: Promise<string> = sut.decrypt(anyId)
+      const accessToken: Promise<string|null> = sut.decrypt(anyId)
       await expect(accessToken).rejects.toThrow()
     })
   })
