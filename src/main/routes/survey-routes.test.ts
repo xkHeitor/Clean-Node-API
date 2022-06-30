@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken'
 import { Collection, InsertOneResult, ObjectId } from 'mongodb'
-import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo'
+import request from 'supertest'
 import app from '../config/app'
 import env from '../config/env'
 
