@@ -1,5 +1,5 @@
 import { JwtAdapter } from './jwt-adapter'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const anyId: string = 'any_id'
 const anyValue: string = 'any_value'
@@ -11,8 +11,8 @@ jest.mock('jsonwebtoken', () => ({
     return new Promise(resolve => resolve(token))
   },
 
-  async verify (token: string): Promise<string> {
-    return new Promise(resolve => resolve(anyValue))
+  async verify (token: string): Promise<JwtPayload|string> {
+    return new Promise(resolve => resolve({ id: anyValue }))
   }
 }))
 
