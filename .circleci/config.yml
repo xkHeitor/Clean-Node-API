@@ -1,0 +1,21 @@
+version: 2.1
+orbs:
+  node: circleci/node@4
+jobs:
+  build-and-test:
+    executor: node/default
+    steps:
+      - node/install-packages:
+        override-ci-command: npm i --production
+      - run:
+          command: eslint 'src/**' && npm run test:coveralls
+workflows:
+  test-and-deploy:
+    jobs:
+      - node/test
+      - deploy:
+          requires:
+            - node/test
+          filters:
+            branches:
+              only: main
