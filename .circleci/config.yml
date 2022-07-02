@@ -9,7 +9,3 @@ jobs:
       - override-ci-command: npm i --production
       - run:
           command: eslint 'src/**' && npm run test:coveralls
-workflows:
-  test-and-deploy:
-    jobs:
-      - node/test
