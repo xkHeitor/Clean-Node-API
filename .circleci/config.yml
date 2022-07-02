@@ -6,16 +6,12 @@ jobs:
     executor: node/default
     steps:
       - node/install-packages:
-        override-ci-command: npm i --production
+          pkg-manager: npm
       - run:
-          command: eslint 'src/**' && npm run test:coveralls
+          command: eslint 'src/**'
+      - run:
+            command: npm run test:coveralls
 workflows:
-  test-and-deploy:
+  build-and-test:
     jobs:
-      - node/test
-      - deploy:
-          requires:
-            - node/test
-          filters:
-            branches:
-              only: main
+      - build-and-test
