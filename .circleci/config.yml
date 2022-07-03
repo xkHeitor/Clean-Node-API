@@ -10,8 +10,4 @@ jobs:
       - run:
           command: eslint 'src/**'
       - run:
-            command: npm run test:coveralls
-workflows:
-  build-and-test:
-    jobs:
-      - master
+          command: npm run test:coveralls
