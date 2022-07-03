@@ -19,7 +19,8 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
     "test:clear": "jest --clearCache",
-    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
+    "lint:fix": "npx eslint --fix"
   },
   "repository": {
     "type": "git",
