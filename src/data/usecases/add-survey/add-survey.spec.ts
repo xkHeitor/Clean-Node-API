@@ -41,7 +41,7 @@ describe('DbAddSurvey UseCase', () => {
 
   test('Should returns 400 if AddSurveyRepository throws an error', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
-    const rejectPromise: Promise<void> = new Promise((resolve, reject) => reject(new Error))
+    const rejectPromise: Promise<void> = new Promise((resolve, reject) => reject(new Error()))
     jest.spyOn(addSurveyRepositoryStub, 'add').mockReturnValueOnce(rejectPromise)
     const promise: Promise<void> = sut.add(makeSurveyData())
     await expect(promise).rejects.toThrow()
