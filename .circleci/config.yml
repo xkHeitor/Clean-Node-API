@@ -5,9 +5,6 @@ jobs:
       - image: circleci/node:16
     working_directory: ~/repo
     steps:
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: eslint 'src/**'
-      - run:
-          command: npm run test:coveralls
+      - run: npm install
+      - run: eslint 'src/**'
+      - run: npm run test:coveralls
