@@ -10,5 +10,5 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: eslint 'src/**'
+      - run: npm run lint:fix
       - run: npm run test:coveralls
