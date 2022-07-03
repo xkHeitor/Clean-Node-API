@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:16
-    working_directory: ~/repo
     steps:
+      - run: checkout
       - run: npm install
       - run: eslint 'src/**'
       - run: npm run test:coveralls
