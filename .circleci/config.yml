@@ -1,9 +1,9 @@
 version: 2.1
-orbs:
-  node: circleci/node@4
 jobs:
-  build-and-test:
-    executor: node/default
+  build:
+    docker:
+      - image: circleci/node:16
+    working_directory: ~/repo
     steps:
       - node/install-packages:
           pkg-manager: npm
@@ -11,7 +11,3 @@ jobs:
           command: eslint 'src/**'
       - run:
           command: npm run test:coveralls
-workflows:
-  build_and_test:
-    jobs:
-      - build-and-test
