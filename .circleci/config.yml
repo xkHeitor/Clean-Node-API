@@ -11,3 +11,8 @@ jobs:
           command: eslint 'src/**'
       - run:
           command: npm run test:coveralls
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test
