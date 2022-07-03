@@ -1,10 +1,14 @@
 version: 2.1
+
+orbs:
+  node: circleci/node@5.0.0
+
 jobs:
   build:
     docker:
       - image: circleci/node:16
     steps:
-      - run: checkout
+      - checkout
       - run: npm install
       - run: eslint 'src/**'
       - run: npm run test:coveralls
