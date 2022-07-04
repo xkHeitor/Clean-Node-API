@@ -10,7 +10,6 @@ jobs:
       - image: circleci/node:16
     steps:
       - checkout
-      - setup_remote_docker
       - run: npm install --force
       - run: sudo apt-get install -y mongodb
       - run: npm run lint:fix
