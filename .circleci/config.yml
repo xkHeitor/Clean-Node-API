@@ -1,18 +1,4 @@
 version: 2.1
-
-orbs:
-  node: circleci/node@5.0.0
-
-jobs:
-  build:
-    docker:
-      - image: circleci/node:16
-    steps:
-      - checkout
-      - run: npm install --force
-      - run: npm run lint:fix
-
-version: 2.1
 jobs:
   run_tests:
     docker:
