@@ -13,4 +13,4 @@ jobs:
       - checkout
       - run: npm install --force
       - run: npm run lint:fix
-      - run: npm run test:ci
+      - run: npm run test:unit
