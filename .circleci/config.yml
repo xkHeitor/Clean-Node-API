@@ -9,7 +9,7 @@ compile:
     - bash ./compile.sh
 
 jobs:
-  build-and-tests:
+  build:
     docker:
       - image: circleci/node:16
     steps:
