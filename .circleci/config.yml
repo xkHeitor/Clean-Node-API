@@ -3,7 +3,7 @@ jobs:
   run_tests:
     docker:
       - image: circleci/node:16
-      - image: circleci/mongo:5
+      - image: circleci/mongo:4
         environment:
           DATABASE_URL: mongodb://localhost/?
     steps:
