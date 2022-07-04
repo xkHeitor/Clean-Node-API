@@ -5,10 +5,10 @@ orbs:
 
 jobs:
   build:
+    environment:
+      MONGODB_URI: $global.__MONGO_URI__
     docker:
       - image: circleci/node:16
-      environment:
-          MONGODB_URI: ${global.__MONGO_URI__}
     steps:
       - checkout
       - run: npm install --force
