@@ -8,9 +8,12 @@ jobs:
     docker:
       - image: circleci/node:16
     environment:
-      - MONGODB_URI: global.__MONGO_URI__
+      - MONGODB_URI: ${global.__MONGO_URI__}
     steps:
       - checkout
+      - run:
+          name: "Print an env var stored in a Context"
+          command: echo ${MONGODB_URI}
       - run: npm install --force
       - run: npm run lint:fix
       - run: npm run test:ci
