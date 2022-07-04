@@ -5,12 +5,9 @@ orbs:
 
 jobs:
   build:
-    environment:
-      MONGODB_URI: $global.__MONGO_URI__
     docker:
       - image: circleci/node:16
     steps:
       - checkout
       - run: npm install --force
       - run: npm run lint:fix
-      - run: npm run test
