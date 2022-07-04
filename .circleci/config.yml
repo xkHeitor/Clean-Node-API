@@ -6,8 +6,25 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:16
+      - image: circleci/node:14
+
+    working_directory: ~/repo
+
     steps:
       - checkout
-      - run: npm install --force
-      - run: npm run lint:fix
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+
+      - run: yarn
+
+      - save_cache:
+          paths:
+            - node_modules
+            - yarn.lock
+            - ./node_modules/.cache/mongodb-memory-server/mongodb-binaries
+          key: v2-dependencies-{{ checksum "package.json" }}
+
+      - run: yarn lint:fix
+      - run: yarn test:coveralls
