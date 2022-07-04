@@ -9,6 +9,7 @@ jobs:
       - image: circleci/node:16
     steps:
       - checkout
-      - run: npm install
+      - run: npm install --force
+      - run: npm audit fix --force
       - run: npm run lint:fix
       - run: npm run test:coveralls
