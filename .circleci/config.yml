@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:16
 
     working_directory: ~/repo
 
@@ -17,14 +17,14 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v2-dependencies-
 
-      - run: yarn
+      - run: npm install --froce
 
       - save_cache:
           paths:
             - node_modules
-            - yarn.lock
             - ./node_modules/.cache/mongodb-memory-server/mongodb-binaries
           key: v2-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn lint:fix
-      - run: yarn test:coveralls
+      - run: npm run lint:fix
+      - run: npm run test
+      - run: npm run test:repl
