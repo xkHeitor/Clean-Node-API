@@ -1,41 +1,23 @@
 version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1
+  node: circleci/node@5.0.0
+
 jobs:
-  run_tests:
+  build:
     docker:
       - image: circleci/node:16
-      - image: circleci/mongo:4
+      - image: cypress/base:14.16.0
         environment:
-          DATABASE_URL: mongodb://localhost/27017
-    steps:
-      - checkout #alias for git clone\
-      - run:
-          name: Waiting for MongoDB to be ready
-          command: |
-            for i in `seq 1 30`;
-            do
-              nc -z localhost 27017 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MongoDB && exit 1
-      - run:
-          name: Install npm dependencies
-          command: |
-            npm install --force --save
-      - run:
-          name: Run unit tests
-          command: |
-            NODE_ENV=test && node node_modules/.bin/jest
-      - run:
-          name: Run e2e tests
-          command: |
-            NODE_ENV=test && node node_modules/.bin/jest --runInBand --config ./test/jest-e2e.json --watchAll=false --detectOpenHandles
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
+          MONGODB_URI: mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@localhost:27017/?authSource=admin
 
-workflows:
-  build_test:
-    jobs:
-      - run_tests
+      - image: mongo:4.4.5
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
+          MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+    steps:
+      - checkout
+      - run: npm install --force
+      - run: npm run lint:fix
+      - run: npm run test:ci
