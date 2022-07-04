@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:16
       - image: circleci/mongo:4
         environment:
-          DATABASE_URL: mongodb://localhost/?
+          DATABASE_URL: mongodb://localhost/27017
     steps:
       - checkout #alias for git clone\
       - run:
