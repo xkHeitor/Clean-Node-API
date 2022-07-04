@@ -1,22 +1,18 @@
 version: 2.1
 
 orbs:
-  cypress: circleci/cypress@2
-  node: circleci/node@5
+  node: circleci/node@5.0.0
+
+compile:
+  override:
+    - chmod -x compile.sh
+    - bash ./compile.sh
 
 jobs:
   build:
     docker:
       - image: circleci/node:16
-      - image: cypress/base:14
-        environment:
-          MONGODB_URI: mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@localhost:27017/?authSource=admin
-      - image: mongo:4.4.5
-        environment:
-          MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
-          MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
     steps:
       - checkout
       - run: npm install --force
       - run: npm run lint:fix
-      - run: npm run test:ci
