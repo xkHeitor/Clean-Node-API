@@ -21,8 +21,7 @@
     "test:clear": "jest --clearCache",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "lint:fix": "npx eslint --fix",
-    "prepare": "husky install",
-    "test:repl": "MONGO_MEMORY_SERVER_FILE=jest-mongodb-config-repl.js jest"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
