@@ -1,3 +1,4 @@
+import MockDate from 'mockdate'
 import { DbAddSurvey } from './add-survey'
 import { AddSurveyModel, AddSurveyRepository } from './add-survey-protocols'
 
@@ -8,7 +9,8 @@ describe('DbAddSurvey UseCase', () => {
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
-    }]
+    }],
+    date: new Date()
   })
 
   const makeAddSurveyRepository = (): AddSurveyRepository => {
@@ -30,6 +32,14 @@ describe('DbAddSurvey UseCase', () => {
     const sut: DbAddSurvey = new DbAddSurvey(addSurveyRepositoryStub)
     return { sut, addSurveyRepositoryStub }
   }
+
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
 
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()

@@ -58,6 +58,7 @@
     "jest-environment-node": "^28.1.2",
     "jest-runner": "^28.1.2",
     "lint-staged": "^13.0.3",
+    "mockdate": "^3.0.5",
     "rimraf": "^3.0.2",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
