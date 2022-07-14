@@ -1,3 +1,4 @@
+import MockDate from 'mockdate'
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo'
 
@@ -15,10 +16,12 @@ describe('Survey Mongo Repository', () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
+    MockDate.set(new Date())
   })
 
   afterAll(async () => {
     await MongoHelper.disconnect()
+    MockDate.reset()
   })
 
   const surveyModelData = {
@@ -26,7 +29,8 @@ describe('Survey Mongo Repository', () => {
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
-    }]
+    }],
+    date: new Date()
   }
 
   const makeSut = (): SurveyMongoRepository => {

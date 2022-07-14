@@ -9,9 +9,10 @@ export class AddSurveyController implements Controller {
     const error: Error|undefined = this.validation.validate(httpRequest.body)
     if (error) return badRequest(error)
     const { question, answers } = httpRequest.body
-    
+    const date: Date = new Date()
+
     try {
-      await this.addSurvey.add({ question, answers })
+      await this.addSurvey.add({ question, answers, date })
       return noContent()
     } catch (error: any) {
       return serverError(error)
