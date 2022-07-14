@@ -1,13 +1,13 @@
-import { noContent } from './../../../helpers/http/http-helper'
-import { Controller, HttpRequest, HttpResponse, LoadSurveys } from './load-surveys-controller-protocols'
+import { ok } from './../../../helpers/http/http-helper'
+import { Controller, HttpRequest, HttpResponse, LoadSurveys, SurveyModel } from './load-surveys-controller-protocols'
 
 export class LoadSurveysController implements Controller {
   
   constructor(private readonly loadSurveys: LoadSurveys){}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveys.load()
-    return new Promise(resolve => resolve(noContent()))
+    const surveys: SurveyModel[] = await this.loadSurveys.load()
+    return ok(surveys)
   }
 
 }
