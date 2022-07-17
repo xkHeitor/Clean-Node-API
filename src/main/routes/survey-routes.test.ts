@@ -24,6 +24,16 @@ describe('Survey Routes', () => {
     return accessToken
   }
 
+  const makeRequestData = (): any => {
+    return {
+      question: 'Question',
+      answers: [{
+        answer: 'Answer',
+        image: 'http:///image-none.com'
+      }]
+    }
+  }
+
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoTest)
   })
@@ -43,13 +53,7 @@ describe('Survey Routes', () => {
   describe('POST', () => {
     test('Should return 403 on add survey without accessToken', async () => {
       await request(app).post('/api/surveys')
-        .send({
-          question: 'Question',
-          answers: [{
-            answer: 'Answer',
-            image: 'http:///image-none.com'
-          }]
-        })
+        .send(makeRequestData())
         .expect(403)
     })
   
@@ -57,13 +61,7 @@ describe('Survey Routes', () => {
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', await makeAccessToken(accountData))
-        .send({
-          question: 'Question',
-          answers: [{
-            answer: 'Answer',
-            image: 'http:///image-none.com'
-          }]
-        })
+        .send(makeRequestData())
         .expect(204)
     })
   })
@@ -74,14 +72,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 200 on load survey with valid accessToken', async () => {
-      await surveyCollection.insertMany([{
-        question: 'any_question',
-        answers: [{
-          image: 'any_image',
-          answer: 'any_answer'
-        }],
-        date: new Date()
-      }])
+      await surveyCollection.insertMany([makeRequestData()])
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', await makeAccessToken(Object.assign({}, accountData, { role: undefined })))
