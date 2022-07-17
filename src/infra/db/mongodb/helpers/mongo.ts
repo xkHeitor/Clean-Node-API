@@ -8,6 +8,7 @@ interface MongoHelperType {
   disconnect: () => Promise<void>;
   getCollection: (name: string) => Promise<Collection>;
   map: (collection: any) => any;
+  mapAll: (collections: any) => any;
 }
 
 export const MongoHelper: MongoHelperType = {
@@ -35,6 +36,11 @@ export const MongoHelper: MongoHelperType = {
   map: (collection: any): any => {
     const { _id, ...collectionWithId } = collection
     return Object.assign({}, collectionWithId, { id: String(_id) })
+  },
+
+  mapAll: (collections: any): any => {
+    collections.forEach(collection => MongoHelper.map(collection))
+    return collections
   }
   
 }
