@@ -16,6 +16,14 @@ describe('Survey Routes', () => {
     role: 'admin'
   }
 
+  const makeAccessToken = async (account): Promise<string> => {
+    const res: InsertOneResult = await accountCollection.insertOne(account)
+    const id: string = String(res.insertedId)
+    const accessToken: string = sign({ id }, env.jwtSecret)
+    await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } }) 
+    return accessToken
+  }
+
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoTest)
   })
@@ -46,13 +54,9 @@ describe('Survey Routes', () => {
     })
   
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const res: InsertOneResult = await accountCollection.insertOne(accountData)
-      const id: string = String(res.insertedId)
-      const accessToken = sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } }) 
       await request(app)
         .post('/api/surveys')
-        .set('x-access-token', accessToken)
+        .set('x-access-token', await makeAccessToken(accountData))
         .send({
           question: 'Question',
           answers: [{
@@ -66,7 +70,22 @@ describe('Survey Routes', () => {
 
   describe('GET', () => {
     test('Should return 403 on load survey without accessToken', async () => {
-      await request(app).post('/api/surveys').expect(403)
+      await request(app).get('/api/surveys').expect(403)
+    })
+
+    test('Should return 200 on load survey with valid accessToken', async () => {
+      await surveyCollection.insertMany([{
+        question: 'any_question',
+        answers: [{
+          image: 'any_image',
+          answer: 'any_answer'
+        }],
+        date: new Date()
+      }])
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', await makeAccessToken(Object.assign({}, accountData, { role: undefined })))
+        .expect(200)
     })
   })
 
