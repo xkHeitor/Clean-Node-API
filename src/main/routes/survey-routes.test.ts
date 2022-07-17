@@ -32,34 +32,42 @@ describe('Survey Routes', () => {
     await MongoHelper.disconnect()
   })
 
-  test('Should return 403 on add survey without accessToken', async () => {
-    await request(app).post('/api/surveys')
-      .send({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer',
-          image: 'http:///image-none.com'
-        }]
-      })
-      .expect(403)
+  describe('POST', () => {
+    test('Should return 403 on add survey without accessToken', async () => {
+      await request(app).post('/api/surveys')
+        .send({
+          question: 'Question',
+          answers: [{
+            answer: 'Answer',
+            image: 'http:///image-none.com'
+          }]
+        })
+        .expect(403)
+    })
+  
+    test('Should return 204 on add survey with valid accessToken', async () => {
+      const res: InsertOneResult = await accountCollection.insertOne(accountData)
+      const id: string = String(res.insertedId)
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } }) 
+      await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'Question',
+          answers: [{
+            answer: 'Answer',
+            image: 'http:///image-none.com'
+          }]
+        })
+        .expect(204)
+    })
   })
 
-  test('Should return 204 on add survey with valid accessToken', async () => {
-    const res: InsertOneResult = await accountCollection.insertOne(accountData)
-    const id: string = String(res.insertedId)
-    const accessToken = sign({ id }, env.jwtSecret)
-    await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } }) 
-    await request(app)
-      .post('/api/surveys')
-      .set('x-access-token', accessToken)
-      .send({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer',
-          image: 'http:///image-none.com'
-        }]
-      })
-      .expect(204)
+  describe('GET', () => {
+    test('Should return 403 on load survey without accessToken', async () => {
+      await request(app).post('/api/surveys').expect(403)
+    })
   })
 
 })
