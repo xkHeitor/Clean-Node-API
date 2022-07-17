@@ -1,7 +1,8 @@
-import MockDate from 'mockdate'
-import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo'
+import { Collection } from 'mongodb'
+import MockDate from 'mockdate'
 
+import { SurveyModel } from './../../../../domain/models/survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import env from '../../../../main/config/env'
 
@@ -37,11 +38,31 @@ describe('Survey Mongo Repository', () => {
     return new SurveyMongoRepository()
   }
 
-  test('Should add a survey on success', async () => {
-    const sut: SurveyMongoRepository = makeSut()
-    await sut.add(surveyModelData)
-    const survey = await surveyCollection.findOne({ question: surveyModelData.question })
-    expect(survey).toBeTruthy()
+  describe('add()', () => {
+    test('Should add a survey on success', async () => {
+      const sut: SurveyMongoRepository = makeSut()
+      await sut.add(surveyModelData)
+      const survey = await surveyCollection.findOne({ question: surveyModelData.question })
+      expect(survey).toBeTruthy()
+    })
+  })
+
+  describe('loadAll()', () => {
+    test('Should load all survey on success', async () => {
+      await surveyCollection.insertMany([surveyModelData, {
+        question: 'other_question',
+        answers: [{
+          image: 'other_image',
+          answer: 'other_answer'
+        }],
+        date: new Date()
+      }])
+      const sut: SurveyMongoRepository = makeSut()
+      const surveys: SurveyModel[] = await sut.loadAll()
+      expect(surveys.length).toBe(2)
+      expect(surveys[0].question).toBe('any_question')
+      expect(surveys[1].question).toBe('other_question')
+    })
   })
 
 })
