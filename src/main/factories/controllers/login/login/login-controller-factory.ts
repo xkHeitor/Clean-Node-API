@@ -1,9 +1,9 @@
-import { makeLogControllerDecorator } from '../../../decorators/log-controller-decorator-factory'
-import { Authentication } from '../../../../../domain/usecases/authentication'
-import { makeDbAuthentication } from '../../../usecases/account/authentication/db-authentication-factory'
-import { LoginController } from '../../../../../presentation/controllers/login/login/login-controller'
-import { Controller } from '../../../../../presentation/protocols/controller'
-import { ValidationComposite } from '../../../../../validation/validators'
+import { makeLogControllerDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
+import { makeDbAuthentication } from '@/main/factories/usecases/account/authentication/db-authentication-factory'
+import { Authentication } from '@/domain/usecases/authentication'
+import { LoginController } from '@/presentation/controllers/login/login/login-controller'
+import { Controller } from '@/presentation/protocols/controller'
+import { ValidationComposite } from '@/validation/validators'
 import { makeLoginUpValidation } from './login-validation-factory'
 
 export const makeLoginController = (): Controller => {

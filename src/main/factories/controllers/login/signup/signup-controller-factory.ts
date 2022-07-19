@@ -1,12 +1,12 @@
-import { makeLogControllerDecorator } from '../../../decorators/log-controller-decorator-factory'
-import { makeDbAddAccount } from '../../../usecases/account/add-account/db-add-account-factory'
-import { Authentication } from '../../../../../domain/usecases/authentication'
-import { makeDbAuthentication } from '../../../usecases/account/authentication/db-authentication-factory'
-import { ValidationComposite } from '../../../../../validation/validators/validation-composite'
-import { Controller } from '../../../../../presentation/protocols/controller'
-import { AddAccount } from '../../../../../domain/usecases/add-account'
+import { makeLogControllerDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
+import { makeDbAuthentication } from '@/main/factories/usecases/account/authentication/db-authentication-factory'
+import { makeDbAddAccount } from '@/main/factories/usecases/account/add-account/db-add-account-factory'
+import { Authentication } from '@/domain/usecases/authentication'
+import { ValidationComposite } from '@/validation/validators/validation-composite'
+import { AddAccount } from '@/domain/usecases/add-account'
+import { Controller } from '@/presentation/protocols/controller'
+import SignUpController from '@/presentation/controllers/login/signup/signup-controller'
 import { makeSignUpValidation } from './signup-validation-factory'
-import SignUpController from '../../../../../presentation/controllers/login/signup/signup-controller'
 
 export const makeSignUpController = (): Controller => {
   const validationComposite: ValidationComposite = makeSignUpValidation()
