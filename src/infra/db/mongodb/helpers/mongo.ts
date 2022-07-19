@@ -1,5 +1,5 @@
 import { Collection, MongoClient, MongoClientOptions } from 'mongodb'
-import { UninitializedDbError } from '../../../errors'
+import { UninitializedDbError } from '@/infra/errors'
 
 interface MongoHelperType {
   client: MongoClient|null;
