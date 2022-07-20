@@ -26,5 +26,6 @@ services:
     depends_on:
       - mongoDB
     environment:
+      - NODE_ENV=production
       - MONGO_URL=mongodb://mongoDB:${PORT_MONGO}/clean-node-api
       - PORT=${PORT_API}

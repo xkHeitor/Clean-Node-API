@@ -4,4 +4,4 @@ WORKDIR /usr/apps/clean-node-api
 
 COPY ./package.json .
 
-RUN npm install --omit=dev
+RUN npm install --legacy-peer-deps
