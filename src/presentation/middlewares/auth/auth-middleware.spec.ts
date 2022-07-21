@@ -25,12 +25,12 @@ describe('Auth Middleware', () => {
     return new LoadAccountByTokenStub()
   }
 
-  interface sutTypes {
+  type SutTypes = {
     sut: Middleware
     loadAccountByTokenStub: LoadAccountByToken
   }
 
-  const makeSut = (role?: string): sutTypes => {
+  const makeSut = (role?: string): SutTypes => {
     const loadAccountByTokenStub: LoadAccountByToken = makeLoadAccountByToken()
     const sut: Middleware = new AuthMiddleware(loadAccountByTokenStub, role)
     return { sut, loadAccountByTokenStub }

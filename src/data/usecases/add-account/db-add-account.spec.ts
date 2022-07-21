@@ -29,7 +29,7 @@ const makeAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub()
 }
 
-interface SutTypes {
+type SutTypes = {
   sut: AddAccount
   hasherStub: Hasher,
   addAccountRepositoryStub: AddAccountRepository

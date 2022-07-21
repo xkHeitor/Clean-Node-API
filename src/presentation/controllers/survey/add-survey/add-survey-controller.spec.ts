@@ -35,13 +35,13 @@ describe('AddSurvey Controller', () => {
     return new AddSurveyStub()
   }
 
-  interface sutTypes {
+  type SutTypes = {
     sut: AddSurveyController,
     validationStub: Validation
     addSurveyStub: AddSurvey
   }
 
-  const makeSut = (): sutTypes => {
+  const makeSut = (): SutTypes => {
     const validationStub: Validation = makeValidation()
     const addSurveyStub: AddSurvey = makeAddSurvey()
     const sut: AddSurveyController = new AddSurveyController(validationStub, addSurveyStub)

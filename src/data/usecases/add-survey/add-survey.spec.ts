@@ -22,12 +22,12 @@ describe('DbAddSurvey UseCase', () => {
     return new AddSurveyRepositoryStub()
   }
 
-  interface sutTypes {
+  type SutTypes = {
     sut: DbAddSurvey,
     addSurveyRepositoryStub: AddSurveyRepository
   }
 
-  const makeSut = (): sutTypes => {
+  const makeSut = (): SutTypes => {
     const addSurveyRepositoryStub: AddSurveyRepository = makeAddSurveyRepository()
     const sut: DbAddSurvey = new DbAddSurvey(addSurveyRepositoryStub)
     return { sut, addSurveyRepositoryStub }

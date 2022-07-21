@@ -35,7 +35,7 @@ describe('LoadSurveys Controller', () => {
     return new LoadSurveysStub()
   }
 
-  interface SutTypes {
+  type SutTypes = {
     sut: LoadSurveysController
     loadSurveysStub: LoadSurveys
   }
