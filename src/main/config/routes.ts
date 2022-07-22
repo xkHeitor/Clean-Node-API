@@ -6,7 +6,7 @@ export default (app: Express): void => {
   app.use('/api', router)
   readdirSync(`${__dirname}/../routes`).map(async file => {
     const ignoredExtensions: string[] = ['.test.', '.spec.'] 
-    if (!ignoredExtensions.find(extension => file.includes(extension))) {
+    if (!ignoredExtensions.find(extension => file.includes(extension)) && !file.endsWith('.map')) {
       (await import(`../routes/${file}`)).default(router)
     }
   })
