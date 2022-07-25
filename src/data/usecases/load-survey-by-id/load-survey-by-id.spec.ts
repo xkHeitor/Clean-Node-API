@@ -1,0 +1,58 @@
+import { SurveyModel } from '../load-surveys/db-load-surveys-protocols'
+import { LoadSurveyByIdRepository } from '@/data/protocols/repository/survey/load-survey-by-id-repository'
+
+import MockDate from 'mockdate'
+import { DbLoadSurveyById } from './load-survey-by-id'
+
+describe('DbLoadSurveyById', () => {
+
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
+  const anyId: string = 'any_id'
+
+  const makeFakeSurveys = (): SurveyModel => {
+    return {
+      id: 'any_id',
+      question: 'any_question',
+      answers: [{
+        image: 'any_image',
+        answer: 'any_answer'
+      }],
+      date: new Date()
+    }
+  }
+
+  const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
+    class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
+      async loadById(id: string): Promise<SurveyModel> {
+        return new Promise(resolve => resolve(makeFakeSurveys()))
+      }
+    }
+    return new LoadSurveyByIdRepositoryStub()
+  }
+
+  type SutTypes = {
+    sut: DbLoadSurveyById
+    loadSurveyByIdRepositoryStub: LoadSurveyByIdRepository
+  }
+
+  const makeSut = (): SutTypes => {
+    const loadSurveyByIdRepositoryStub = makeLoadSurveyByIdRepositoryStub()
+    const sut: DbLoadSurveyById = new DbLoadSurveyById(loadSurveyByIdRepositoryStub)
+    return { sut, loadSurveyByIdRepositoryStub }
+  }
+
+  test('Should call LoadSurveyByIdRepository', async () => {
+    const { sut, loadSurveyByIdRepositoryStub }: SutTypes = makeSut()
+    const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
+    await sut.loadById(anyId)
+    expect(loadByIdSpy).toHaveBeenCalledWith(anyId)
+  })
+
+})
