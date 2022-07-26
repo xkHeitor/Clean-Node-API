@@ -22,7 +22,6 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       returnDocument: 'after'
     })
 
-    console.log(survey.value)
     return survey.value && MongoHelper.map(survey.value) 
   }
 
