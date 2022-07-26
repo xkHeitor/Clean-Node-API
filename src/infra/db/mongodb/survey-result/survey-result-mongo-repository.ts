@@ -5,7 +5,7 @@ import { Collection } from 'mongodb'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   
-  private readonly collectionName: string = 'surveys'
+  private readonly collectionName: string = 'surveyResults'
 
   async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
     const surveyCollection: Collection = await MongoHelper.getCollection(this.collectionName)
@@ -22,6 +22,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       returnDocument: 'after'
     })
 
+    console.log(survey.value)
     return survey.value && MongoHelper.map(survey.value) 
   }
 
