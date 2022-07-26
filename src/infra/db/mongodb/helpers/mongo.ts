@@ -39,8 +39,7 @@ export const MongoHelper: MongoHelperType = {
   },
 
   mapAll: (collections: any): any => {
-    collections.forEach(collection => MongoHelper.map(collection))
-    return collections
+    return collections.map(collection => MongoHelper.map(collection))
   }
   
 }
