@@ -1,7 +1,6 @@
-import { AccountModel } from './../../../../domain/models/account'
-import { EmailInUseError } from './../../../errors'
-import { Controller, HttpRequest, HttpResponse, AddAccount, Validation, Authentication } from './signup-controller-protocols'
-import { badRequest, serverError, ok, forbidden } from '../../../helpers/http/http-helper'
+import { Controller, HttpRequest, HttpResponse, AddAccount, Validation, Authentication, AccountModel } from './signup-controller-protocols'
+import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { EmailInUseError } from '@/presentation/errors'
 
 export default class SignUpController implements Controller {
 

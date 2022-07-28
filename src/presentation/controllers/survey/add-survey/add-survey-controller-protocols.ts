@@ -1,3 +1,3 @@
-export * from '../../../../domain/usecases/authentication'
-export * from '../../../../domain/usecases/add-survey'
+export * from '@/domain/models/account/authentication'
+export * from '@/domain/usecases/survey/add-survey'
 export * from '../../../protocols'

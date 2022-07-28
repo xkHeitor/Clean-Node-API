@@ -1,8 +1,8 @@
-import { SurveyResultModel } from '@/domain/models/survey-result'
-import { SaveSurveyResultModel } from '@/domain/usecases/save-survey-result'
+import { SurveyResultModel } from '@/domain/models/survey/survey-result'
+import { SaveSurveyResultModel } from '@/domain/usecases/survey/save-survey-result'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
-import { SurveyModel } from '@/domain/models/survey'
-import { AccountModel } from '@/domain/models/account'
+import { SurveyModel } from '@/domain/models/survey/survey'
+import { AccountModel } from '@/domain/models/account/account'
 import { MongoHelper } from '../helpers/mongo'
 import env from '@/main/config/env'
 
