@@ -1,12 +1,21 @@
-import { Controller, LoadSurveyById, HttpRequest, HttpResponse } from './save-survey-result-controller-protocols'
-import { noContent } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from './../../../errors/invalid-param-error'
+import { 
+  Controller, 
+  LoadSurveyById, 
+  HttpRequest, 
+  HttpResponse, 
+  SurveyModel, 
+  forbidden, 
+  noContent 
+} from './save-survey-result-controller-protocols'
 
 export class SaveSurveyResultController implements Controller {
   
   constructor(private readonly loadSurveyById: LoadSurveyById){}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveyById.loadById(httpRequest.params.surveyId)
+    const surveyById: SurveyModel = await this.loadSurveyById.loadById(httpRequest.params.surveyId)
+    if (!surveyById) return forbidden(new InvalidParamError('surveyId'))
     return noContent()
   }
   
