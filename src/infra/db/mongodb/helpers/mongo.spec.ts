@@ -1,5 +1,7 @@
-import { UninitializedDbError } from './../../../errors/uninitialized-db'
-import env from '../../../../main/config/env'
+
+import { UninitializedDbError } from '@/infra/errors'
+import env from '@/main/config/env'
+
 import { MongoHelper as sut } from './mongo'
 
 describe('Mongo Helper', () => {

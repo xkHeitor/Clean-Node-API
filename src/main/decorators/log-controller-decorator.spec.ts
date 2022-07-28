@@ -1,4 +1,4 @@
-import { AccountModel } from '@/domain/models/account'
+import { AccountModel } from '@/domain/models/account/account'
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller } from '@/presentation/protocols'
 import { HttpRequest, HttpResponse } from '@/presentation/protocols/http'

@@ -1,5 +1,5 @@
 import env from '@/main/config/env'
-import { SurveyModel } from '@/domain/models/survey'
+import { SurveyModel } from '@/domain/models/survey/survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo'
 import { Collection } from 'mongodb'
