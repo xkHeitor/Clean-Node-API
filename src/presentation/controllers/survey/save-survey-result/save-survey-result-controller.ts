@@ -5,10 +5,11 @@ import {
   LoadSurveyById, 
   SurveyModel, 
   SaveSurveyResult,
+  SurveyResultModel,
   forbidden, 
-  noContent,
   serverError,
-  InvalidParamError
+  InvalidParamError,
+  ok
 } from './save-survey-result-controller-protocols'
 
 export class SaveSurveyResultController implements Controller {
@@ -26,11 +27,11 @@ export class SaveSurveyResultController implements Controller {
       const answers = survey.answers.map(reply => reply.answer)
       if (!answers.includes(answer)) return forbidden(new InvalidParamError('answer'))
 
-      await this.saveSurveyResult.save({ accountId, surveyId, answer, date: new Date() })
+      const surveyResultModel: SurveyResultModel = await this.saveSurveyResult.save({ accountId, surveyId, answer, date: new Date() })
+      return ok(surveyResultModel)
     } catch (error: any) {
       return serverError(error)
     }
-    return noContent()
   }
   
 }
