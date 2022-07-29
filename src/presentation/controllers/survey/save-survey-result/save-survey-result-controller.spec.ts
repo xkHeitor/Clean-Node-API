@@ -3,10 +3,11 @@ import {
   HttpRequest, 
   HttpResponse, 
   LoadSurveyById, 
-  SurveyModel, 
   forbidden, 
-  InvalidParamError,
   serverError,
+  ok,
+  InvalidParamError,
+  SurveyModel, 
   SurveyResultModel,
   SaveSurveyResult,
   SaveSurveyResultModel
@@ -136,6 +137,21 @@ describe('SafeSurveyResult Controller', () => {
       date: new Date(),
       answer: 'any_answer'
     })
+  })
+
+  test('Should return 500 if SaveSurveyResult throws', async () => {
+    const { sut, saveSurveyResultStub } = makeSut()
+    const error: Error = new Error()
+    const errorPromise: Promise<SurveyResultModel> = new Promise((resolve, reject) => reject(error))
+    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(errorPromise)
+    const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(error))
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok(makeFakeSurveyResultModel())) 
   })
 
 })
