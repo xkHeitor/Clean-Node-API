@@ -75,7 +75,7 @@
     "validator": "^13.7.0"
   },
   "engines": {
-    "node": "18.0"
+    "node": "16.x"
   },
   "_moduleAliases": {
     "@": "dist"
