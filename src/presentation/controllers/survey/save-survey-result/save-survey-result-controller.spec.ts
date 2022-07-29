@@ -5,7 +5,8 @@ import {
   LoadSurveyById, 
   SurveyModel, 
   forbidden, 
-  InvalidParamError 
+  InvalidParamError,
+  serverError
 } from './save-survey-result-controller-protocols'
 
 describe('SafeSurveyResult Controller', () => {
@@ -63,6 +64,15 @@ describe('SafeSurveyResult Controller', () => {
     const request: HttpRequest = makeFakeRequest()
     const httpResponse: HttpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    const error: Error = new Error()
+    const errorPromise: Promise<SurveyModel> = new Promise((resolve, reject) => reject(error))
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(errorPromise)
+    const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(error))
   })
 
 })
