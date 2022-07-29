@@ -1,4 +1,3 @@
-import { InvalidParamError } from './../../../errors/invalid-param-error'
 import { 
   Controller, 
   LoadSurveyById, 
@@ -6,7 +5,9 @@ import {
   HttpResponse, 
   SurveyModel, 
   forbidden, 
-  noContent 
+  noContent,
+  serverError,
+  InvalidParamError 
 } from './save-survey-result-controller-protocols'
 
 export class SaveSurveyResultController implements Controller {
@@ -14,8 +15,12 @@ export class SaveSurveyResultController implements Controller {
   constructor(private readonly loadSurveyById: LoadSurveyById){}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const surveyById: SurveyModel = await this.loadSurveyById.loadById(httpRequest.params.surveyId)
-    if (!surveyById) return forbidden(new InvalidParamError('surveyId'))
+    try {
+      const surveyById: SurveyModel = await this.loadSurveyById.loadById(httpRequest.params.surveyId)
+      if (!surveyById) return forbidden(new InvalidParamError('surveyId'))
+    } catch (error: any) {
+      return serverError(error)
+    }
     return noContent()
   }
   
