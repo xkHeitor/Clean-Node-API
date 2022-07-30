@@ -1,9 +1,10 @@
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo'
+import app from '@/main/config/app'
+import env from '@/main/config/env'
+
 import { sign } from 'jsonwebtoken'
 import { Collection, InsertOneResult, ObjectId } from 'mongodb'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo'
 import request from 'supertest'
-import app from '../config/app'
-import env from '../config/env'
 
 describe('Survey Routes', () => {
 
@@ -33,7 +34,7 @@ describe('Survey Routes', () => {
       }]
     }
   }
-
+  
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoTest)
   })
