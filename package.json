@@ -14,7 +14,7 @@
     "down": "sudo docker-compose down",
     "destroy:c": "sudo docker rm api-container && sudo docker rmi clean-node-api",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles --forceExit",
-    "test:verbose": "jest --passWithNoTests --runInBand --detectOpenHandles",
+    "test:verbose": "jest --passWithNoTests --runInBand --detectOpenHandles --forceExit",
     "test:staged": "npm test -- ",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",

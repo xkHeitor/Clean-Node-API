@@ -24,7 +24,7 @@ export class SaveSurveyResultController implements Controller {
     try {
       const survey: SurveyModel = await this.loadSurveyById.loadById(surveyId)
       if (!survey || !survey.answers) return forbidden(new InvalidParamError('surveyId'))
-      const answers = survey.answers.map(reply => reply.answer)
+      const answers: string[] = survey.answers.map(reply => reply.answer)
       if (!answers.includes(answer)) return forbidden(new InvalidParamError('answer'))
 
       const surveyResultModel: SurveyResultModel = await this.saveSurveyResult.save({ accountId, surveyId, answer, date: new Date() })
