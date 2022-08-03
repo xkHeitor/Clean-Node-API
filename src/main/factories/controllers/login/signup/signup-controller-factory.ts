@@ -1,7 +1,7 @@
 import { makeLogControllerDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
 import { makeDbAuthentication } from '@/main/factories/usecases/authentication/db-authentication-factory'
 import { makeDbAddAccount } from '@/main/factories/usecases/account/add-account/db-add-account-factory'
-import { Authentication } from '@/domain/models/account/authentication'
+import { Authentication } from '@/domain/usecases/account/authentication'
 import { ValidationComposite } from '@/validation/validators/validation-composite'
 import { AddAccount } from '@/domain/usecases/account/add-account'
 import { Controller } from '@/presentation/protocols/controller'

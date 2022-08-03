@@ -1,10 +1,10 @@
 import MockDate from 'mockdate'
 import { DbAddSurvey } from './add-survey'
-import { AddSurveyModel, AddSurveyRepository } from './add-survey-protocols'
+import { AddSurveyParams, AddSurveyRepository } from './add-survey-protocols'
 
 describe('DbAddSurvey UseCase', () => {
 
-  const makeSurveyData = (): AddSurveyModel => ({
+  const makeSurveyData = (): AddSurveyParams => ({
     question: 'any_question',
     answers: [{
       image: 'any_image',
@@ -15,7 +15,7 @@ describe('DbAddSurvey UseCase', () => {
 
   const makeAddSurveyRepository = (): AddSurveyRepository => {
     class AddSurveyRepositoryStub implements AddSurveyRepository {
-      async add (surveyData: AddSurveyModel): Promise<void> {
+      async add (surveyData: AddSurveyParams): Promise<void> {
         return new Promise(resolve => resolve())
       }
     }
@@ -44,7 +44,7 @@ describe('DbAddSurvey UseCase', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
-    const surveyData: AddSurveyModel = makeSurveyData()
+    const surveyData: AddSurveyParams = makeSurveyData()
     await sut.add(surveyData)
     expect(addSpy).toHaveBeenCalledWith(surveyData)
   })

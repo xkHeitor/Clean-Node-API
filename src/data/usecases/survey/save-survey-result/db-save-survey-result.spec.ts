@@ -1,10 +1,10 @@
-import { SurveyResultModel, SaveSurveyResultRepository, SaveSurveyResultModel } from './db-save-survey-result-protocols'
+import { SurveyResultModel, SaveSurveyResultRepository, SaveSurveyResultParams } from './db-save-survey-result-protocols'
 import MockDate from 'mockdate'
 import { DbSaveSurveyResult } from './db-save-survey-result'
 
 describe('DbSaveSurveyResult UseCase', () => {
 
-  const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
+  const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
     accountId: 'any_account_id',
     surveyId: 'any_survey_id',
     answer: 'any_answer',
@@ -15,7 +15,7 @@ describe('DbSaveSurveyResult UseCase', () => {
 
   const makeSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
     class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-      async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+      async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
         return new Promise(resolve => resolve(makeFakeSurveyResult()))
       }
     }
@@ -44,7 +44,7 @@ describe('DbSaveSurveyResult UseCase', () => {
   test('Should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, 'save')
-    const surveyData: SaveSurveyResultModel = makeFakeSurveyResultData()
+    const surveyData: SaveSurveyResultParams = makeFakeSurveyResultData()
     await sut.save(surveyData)
     expect(saveSpy).toHaveBeenCalledWith(surveyData)
   })
