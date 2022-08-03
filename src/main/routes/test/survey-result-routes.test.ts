@@ -1,4 +1,5 @@
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo'
+import { mockAddAccountParams } from '@/domain/test'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
 
@@ -10,12 +11,6 @@ describe('Survey Routes', () => {
 
   let surveyCollection: Collection
   let accountCollection: Collection
- 
-  const accountData = {
-    name: 'any_name',
-    email: 'any_email',
-    password: 'any_pass'
-  }
 
   const makeAccessToken = async (account): Promise<string> => {
     const res: InsertOneResult = await accountCollection.insertOne(account)
@@ -51,16 +46,16 @@ describe('Survey Routes', () => {
 
     test('Should return 200 on save survey result with accessToken', async () => {
       const insertResult: InsertOneResult = (await surveyCollection.insertOne({
-        question: 'other_question',
+        question: 'any_question',
         answers: [{
-          image: 'other_image',
-          answer: 'other_answer'
+          image: 'any_image',
+          answer: 'any_answer'
         }],
         date: new Date()
       }))
       await request(app).put(`/api/surveys/${String(insertResult.insertedId)}/results`)
-        .set('x-access-token', await makeAccessToken(accountData))
-        .send({ answer: 'other_answer' })
+        .set('x-access-token', await makeAccessToken(mockAddAccountParams()))
+        .send({ answer: 'any_answer' })
         .expect(200)
     })
 

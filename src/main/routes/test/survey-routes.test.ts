@@ -1,3 +1,4 @@
+import { mockAddAccountParams } from '@/domain/test'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
@@ -10,12 +11,6 @@ describe('Survey Routes', () => {
 
   let surveyCollection: Collection
   let accountCollection: Collection
-  const accountData = {
-    name: 'any_name',
-    email: 'any_email',
-    password: 'any_pass',
-    role: 'admin'
-  }
 
   const makeAccessToken = async (account): Promise<string> => {
     const res: InsertOneResult = await accountCollection.insertOne(account)
@@ -27,9 +22,9 @@ describe('Survey Routes', () => {
 
   const makeRequestData = (): any => {
     return {
-      question: 'Question',
+      question: 'any_question',
       answers: [{
-        answer: 'Answer',
+        answer: 'any_answer',
         image: 'http:///image-none.com'
       }]
     }
@@ -61,7 +56,7 @@ describe('Survey Routes', () => {
     test('Should return 204 on add survey with valid accessToken', async () => {
       await request(app)
         .post('/api/surveys')
-        .set('x-access-token', await makeAccessToken(accountData))
+        .set('x-access-token', await makeAccessToken(Object.assign({}, mockAddAccountParams(), { role: 'admin' })))
         .send(makeRequestData())
         .expect(204)
     })
@@ -76,7 +71,7 @@ describe('Survey Routes', () => {
       await surveyCollection.insertMany([makeRequestData()])
       await request(app)
         .get('/api/surveys')
-        .set('x-access-token', await makeAccessToken(Object.assign({}, accountData, { role: undefined })))
+        .set('x-access-token', await makeAccessToken(Object.assign({}, mockAddAccountParams(), { role: undefined })))
         .expect(200)
     })
   })

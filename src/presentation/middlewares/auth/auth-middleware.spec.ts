@@ -2,15 +2,9 @@ import { LoadAccountByToken, AccountModel, HttpRequest, HttpResponse, Middleware
 import { AuthMiddleware } from './auth-middleware'
 import { AccessDeniedError } from './../../errors'
 import { forbidden, ok, serverError } from './../../helpers/http/http-helper'
+import { mockAccountModel, throwError } from '@/domain/test'
 
 describe('Auth Middleware', () => {
-
-  const makeFakeAccount = (): AccountModel => ({
-    id: 'valid_id', 
-    name: 'valid_name',
-    email: 'valid_email', 
-    password: 'hashed_password'
-  })  
 
   const makeFakeRequest = (): HttpRequest => ({
     headers: { 'x-access-token': 'any_token' }
@@ -19,7 +13,7 @@ describe('Auth Middleware', () => {
   const makeLoadAccountByToken = (): LoadAccountByToken => {
     class LoadAccountByTokenStub implements LoadAccountByToken {
       async load (accessToken: string, role?: string | undefined): Promise<AccountModel|null> {
-        return new Promise(resolve => (resolve(makeFakeAccount())))
+        return new Promise(resolve => (resolve(mockAccountModel())))
       }
     }
     return new LoadAccountByTokenStub()
@@ -57,7 +51,7 @@ describe('Auth Middleware', () => {
   test('Should return 200 if LoadAccountByToken returns an account', async () => {
     const { sut } = makeSut()
     const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(ok({ accountId: 'valid_id' }))
+    expect(httpResponse).toEqual(ok({ accountId: 'any_id' }))
   })
 
   test('Should call LoadAccountByToken with correct accessToken', async () => {
@@ -79,8 +73,7 @@ describe('Auth Middleware', () => {
 
   test('Should return 500 if LoadAccountByToken throws', async () => {
     const { sut,loadAccountByTokenStub } = makeSut()
-    const rejectPromise: Promise<null> = new Promise((resolve,reject) => reject(new Error()))
-    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(rejectPromise)
+    jest.spyOn(loadAccountByTokenStub, 'load').mockImplementationOnce(throwError)
     const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

@@ -1,7 +1,9 @@
-import env from '@/main/config/env'
 import { SurveyModel } from '@/domain/models/survey/survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo'
+import { mockSurveysModel, mockSurveyModel } from '@/domain/test'
+import env from '@/main/config/env'
+
 import { Collection } from 'mongodb'
 import MockDate from 'mockdate'
 
@@ -24,14 +26,7 @@ describe('Survey Mongo Repository', () => {
     MockDate.reset()
   })
 
-  const surveyModelData = {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
-  }
+  const surveyModelData: SurveyModel = mockSurveyModel()
 
   const makeSut = (): SurveyMongoRepository => {
     return new SurveyMongoRepository()
@@ -48,14 +43,7 @@ describe('Survey Mongo Repository', () => {
 
   describe('loadAll()', () => {
     test('Should load all survey on success', async () => {
-      await surveyCollection.insertMany([surveyModelData, {
-        question: 'other_question',
-        answers: [{
-          image: 'other_image',
-          answer: 'other_answer'
-        }],
-        date: new Date()
-      }])
+      await surveyCollection.insertMany(mockSurveysModel())
       const sut: SurveyMongoRepository = makeSut()
       const surveys: SurveyModel[] = await sut.loadAll()
       expect(surveys.length).toBe(2)
@@ -74,18 +62,11 @@ describe('Survey Mongo Repository', () => {
 
   describe('loadById()', () => {
     test('Should load survey by id on success', async () => {
-      const insertResult = (await surveyCollection.insertOne({
-        question: 'other_question',
-        answers: [{
-          image: 'other_image',
-          answer: 'other_answer'
-        }],
-        date: new Date()
-      }))
+      const insertResult = (await surveyCollection.insertOne(mockSurveyModel()))
       
       const insertId: string = String(insertResult.insertedId)
-      const sut = makeSut()
-      const survey = await sut.loadById(insertId)
+      const sut: SurveyMongoRepository = makeSut()
+      const survey: SurveyModel = await sut.loadById(insertId)
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
     })
