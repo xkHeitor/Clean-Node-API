@@ -1,8 +1,9 @@
-import { LoadAccountByToken, AccountModel, HttpRequest, HttpResponse, Middleware } from './auth-middleware-protocols'
+import { LoadAccountByToken, HttpRequest, HttpResponse, Middleware } from './auth-middleware-protocols'
 import { AuthMiddleware } from './auth-middleware'
 import { AccessDeniedError } from './../../errors'
 import { forbidden, ok, serverError } from './../../helpers/http/http-helper'
-import { mockAccountModel, throwError } from '@/domain/test'
+import { throwError } from '@/domain/test'
+import { mockLoadAccountByToken } from '@/presentation/test'
 
 describe('Auth Middleware', () => {
 
@@ -10,22 +11,13 @@ describe('Auth Middleware', () => {
     headers: { 'x-access-token': 'any_token' }
   })
 
-  const makeLoadAccountByToken = (): LoadAccountByToken => {
-    class LoadAccountByTokenStub implements LoadAccountByToken {
-      async load (accessToken: string, role?: string | undefined): Promise<AccountModel|null> {
-        return new Promise(resolve => (resolve(mockAccountModel())))
-      }
-    }
-    return new LoadAccountByTokenStub()
-  }
-
   type SutTypes = {
     sut: Middleware
     loadAccountByTokenStub: LoadAccountByToken
   }
 
   const makeSut = (role?: string): SutTypes => {
-    const loadAccountByTokenStub: LoadAccountByToken = makeLoadAccountByToken()
+    const loadAccountByTokenStub: LoadAccountByToken = mockLoadAccountByToken()
     const sut: Middleware = new AuthMiddleware(loadAccountByTokenStub, role)
     return { sut, loadAccountByTokenStub }
   }
