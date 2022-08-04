@@ -7,7 +7,8 @@ module.exports = {
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/*protocols.ts',
     '!<rootDir>/src/infra/errors/**',
-    '!<rootDir>/src/**/http-helper.*'
+    '!<rootDir>/src/**/http-helper.*',
+    '!<rootDir>/src/**/test/**'
   ],
   coverageDirectory: 'coverage',
   preset: '@shelf/jest-mongodb',
