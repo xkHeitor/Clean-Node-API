@@ -1,7 +1,9 @@
 import { DbLoadSurveys } from './db-load-surveys'
 import { LoadSurveysRepository, SurveyModel } from './db-load-surveys-protocols'
+import { throwError, mockSurveysModel } from '@/domain/test'
 
 import MockDate from 'mockdate'
+import { mockLoadSurveysRepository } from '@/data/test'
 
 describe('DbLoadSurveys', () => {
 
@@ -11,36 +13,7 @@ describe('DbLoadSurveys', () => {
 
   afterAll(() => {
     MockDate.reset()
-  })
-
-  const makeFakeSurveys = (): SurveyModel [] => {
-    return [{
-      id: 'any_id',
-      question: 'any_question',
-      answers: [{
-        image: 'any_image',
-        answer: 'any_answer'
-      }],
-      date: new Date()
-    }, {
-      id: 'other_id',
-      question: 'other_question',
-      answers: [{
-        image: 'other_image',
-        answer: 'other_answer'
-      }],
-      date: new Date()
-    }]
-  }
-
-  const makeLoadSurveysRepositoryStub = (): LoadSurveysRepository => {
-    class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-      async loadAll(): Promise<SurveyModel[]> {
-        return new Promise(resolve => resolve(makeFakeSurveys()))
-      }
-    }
-    return new LoadSurveysRepositoryStub()
-  }
+  })  
 
   type SutTypes = {
     sut: DbLoadSurveys
@@ -48,7 +21,7 @@ describe('DbLoadSurveys', () => {
   }
 
   const makeSut = (): SutTypes => {
-    const loadSurveysRepositoryStub = makeLoadSurveysRepositoryStub()
+    const loadSurveysRepositoryStub: LoadSurveysRepository = mockLoadSurveysRepository()
     const sut: DbLoadSurveys = new DbLoadSurveys(loadSurveysRepositoryStub)
     return { sut, loadSurveysRepositoryStub }
   }
@@ -63,14 +36,12 @@ describe('DbLoadSurveys', () => {
   test('Should return a list of Surveys on success', async () => {
     const { sut }: SutTypes = makeSut()
     const surveys: SurveyModel[] = await sut.load()
-    expect(surveys).toEqual(makeFakeSurveys())
+    expect(surveys).toEqual(mockSurveysModel())
   })
 
   test('Should throw if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositoryStub }: SutTypes = makeSut()
-    const error: Error = new Error()
-    const errorPromise: Promise<SurveyModel[]> = new Promise((resolve, reject) => reject(error))
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockReturnValueOnce(errorPromise)
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(throwError)
     const promise: Promise<SurveyModel[]> = sut.load()
     await expect(promise).rejects.toThrow()
   })

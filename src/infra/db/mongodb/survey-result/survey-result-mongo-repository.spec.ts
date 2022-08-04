@@ -1,5 +1,5 @@
 import { SurveyResultModel } from '@/domain/models/survey/survey-result'
-import { SaveSurveyResultModel } from '@/domain/usecases/survey/save-survey-result'
+import { SaveSurveyResultParams } from '@/domain/usecases/survey/save-survey-result'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { SurveyModel } from '@/domain/models/survey/survey'
 import { AccountModel } from '@/domain/models/account/account'
@@ -65,13 +65,13 @@ describe('Survey Mongo Repository', () => {
     return res
   }
 
-  const makeSurveyResult = async (saveSurveyResult: SaveSurveyResultModel): Promise<SurveyResultModel> => {
+  const makeSurveyResult = async (saveSurveyResult: SaveSurveyResultParams): Promise<SurveyResultModel> => {
     const insertResult: InsertOneResult = await surveyResultCollection.insertOne(saveSurveyResult)
     const res: ReturnType<any> = await surveyResultCollection.findOne(insertResult.insertedId)
     return res && MongoHelper.map(res)
   }
 
-  const makeSaveSurveyResult = async (): Promise<SaveSurveyResultModel> => {
+  const makeSaveSurveyResult = async (): Promise<SaveSurveyResultParams> => {
     const survey: SurveyModel = await makeSurvey()
     const account: AccountModel = await makeAccount()
     return {
@@ -90,7 +90,7 @@ describe('Survey Mongo Repository', () => {
    
     test('Should add a survey result if its new', async () => {
       const sut: SurveyResultMongoRepository = makeSut()
-      const saveSurveyResult: SaveSurveyResultModel = await makeSaveSurveyResult()
+      const saveSurveyResult: SaveSurveyResultParams = await makeSaveSurveyResult()
       const surveyResult: SurveyResultModel = await sut.save(saveSurveyResult)
 
       expect(surveyResult).toBeTruthy()
@@ -99,7 +99,7 @@ describe('Survey Mongo Repository', () => {
     })
 
     test('Should update survey result if its not new', async () => {
-      const saveSurveyResult: SaveSurveyResultModel = await makeSaveSurveyResult()
+      const saveSurveyResult: SaveSurveyResultParams = await makeSaveSurveyResult()
       const firstSurveyResult = await makeSurveyResult(saveSurveyResult)
       
       const answerEdited: string = 'edit_answer'
