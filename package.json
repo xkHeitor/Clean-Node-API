@@ -1,6 +1,6 @@
 {
   "name": "clean-node-api",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Curso Rodrigo Manguinho | NodeJs, Typescript, TDD, DDD, Clean Architecture e SOLID",
   "main": "serve.js",
   "scripts": {
