@@ -59,7 +59,7 @@ describe('SafeSurveyResult Controller', () => {
 
   test('Should return 403 if LoadSurveyById returns null', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
-    const mockResponse: Promise<SurveyModel> = new Promise(resolve => resolve(null)) 
+    const mockResponse: Promise<SurveyModel> = Promise.resolve(null) 
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(mockResponse)
     const request: HttpRequest = mockFakeRequest()
     const httpResponse: HttpResponse = await sut.handle(request)

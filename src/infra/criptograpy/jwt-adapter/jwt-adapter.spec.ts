@@ -8,11 +8,11 @@ const token: string = 'token'
 
 jest.mock('jsonwebtoken', () => ({
   async sign (): Promise<string> {
-    return new Promise(resolve => resolve(token))
+    return Promise.resolve(token)
   },
 
   async verify (token: string): Promise<string> {
-    return new Promise(resolve => resolve(anyValue))
+    return Promise.resolve(anyValue)
   }
 }))
 

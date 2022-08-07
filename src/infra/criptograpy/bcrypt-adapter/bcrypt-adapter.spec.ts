@@ -7,11 +7,11 @@ const salt: number = 12
 
 jest.mock('bcrypt', () => ({
   async hash(): Promise<string> {
-    return new Promise(resolve => resolve(valueHash))
+    return Promise.resolve(valueHash)
   },
 
   async compare(): Promise<boolean> {
-    return new Promise(resolve => resolve(true))
+    return Promise.resolve(true)
   }
 }))
 
