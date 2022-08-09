@@ -1,3 +1,3 @@
-export const notFound = {
-  description: 'Not Found'
-}
+import { errorComponent } from './error'
+
+export const notFound = errorComponent('Not found')

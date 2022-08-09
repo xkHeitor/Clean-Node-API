@@ -1,10 +1,3 @@
-export const unauthorized = {
-  description: 'Unauthorized',
-  content: {
-    'application/json': {
-      schema: {
-        $ref: '#/schemas/error'
-      }
-    }
-  } 
-}
+import { errorComponent } from './error'
+
+export const unauthorized = errorComponent('Unauthorized')
